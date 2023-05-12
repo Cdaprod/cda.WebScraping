@@ -1,0 +1,41 @@
+from selenium import webdriver
+from selenium.webdriver.common.keys import Keys
+import time
+
+# Initialize the Chrome webdriver
+driver = webdriver.Chrome()
+
+def login(url, username, password):
+    driver.get(url)
+
+    # Assuming the username and password fields have the ids "username" and "password"
+    username_field = driver.find_element_by_id("username")
+    password_field = driver.find_element_by_id("password")
+
+    # Fill the fields
+    username_field.send_keys(username)
+    password_field.send_keys(password)
+
+    # Assuming the login button has the id "login"
+    login_button = driver.find_element_by_id("login")
+    login_button.click()
+
+    # Wait for the page to load
+    time.sleep(5)
+
+def scrape_conversations():
+    # Assuming each conversation is contained in a div with the class "conversation"
+    conversations = driver.find_elements_by_class_name("conversation")
+
+    for conversation in conversations:
+        print(conversation.text)
+
+# Replace these with your actual login details and url
+url = "https://www.example.com/login"
+username = "your_username"
+password = "your_password"
+
+login(url, username, password)
+scrape_conversations()
+
+driver.close()
